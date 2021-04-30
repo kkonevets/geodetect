@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Map</title>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=en_US&onload=mapStart" type="text/javascript"></script>
+  </head>
+  <body>
+    <style>
+      textarea{
+	  width: 200px;
+	  height: 100%;
+	  border: 1px solid #ccc;
+	  resize: none;
+	  position: absolute;
+	  left: 0;
+	  top: 0;
+	  box-sizing: border-box;
+      }
+      body{
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  margin: 0;
+	  box-sizing: border-box;
+	  overflow: hidden;
+      }
+    </style>
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+    <div id="myMap" style="width: calc(100% - 200px); height: 100%; position: absolute; right: 0;"></div>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+      var myMap
+      function mapStart(){
+	  myMap = new ymaps.Map('myMap', {
+	      // центр и коэффициент масштабирования однозначно
+	      // определяют область картографирования
+	      center: [55.76, 37.64],
+	      zoom: 12
+	  });
+      }
+      var t;
+      var myCollection;
+      $(document).ready(function(){
+	  $('textarea').change(function(){
+	      myCollection = new ymaps.GeoObjectCollection();
+	      t = $(this).val().split('\n');
+	      var coord_f = [55.76, 37.64];
+	      for(var i in t)
+	      {
+		  if (t[i]=="") continue;
+		  var coord = t[i].split(/[ \t]+/);
+		  coord_f = coord;
+		  var myPlacemark = new ymaps.Placemark(coord, {}, {
+		      iconLayout: 'default#image',
+		      iconImageHref: 'p.png',
+		      iconImageSize: [8, 8],
+		      iconImageOffset: [-2.5, -2.5]
+		  });
+		  myCollection.add(myPlacemark); // Размещение геообъекта на карте.
+	      }
+	      console.log(coord_f);
+	      myMap.setCenter(coord_f, 12);
+	      myMap.geoObjects.add(myCollection);
+	  })
+      })
+    </script>
+  </body>
+</html>
