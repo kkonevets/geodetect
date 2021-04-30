@@ -1,4 +1,4 @@
-Thread-safe geosearch engine with SIMD optimization (no Mercator projection, just plain Eucledian distances). 
+Thread-safe geosearch index with SIMD optimization (no Mercator projection, just plain Eucledian distances). 
 1) Detects if a point with radius intersects with geometries in index.
 2) Vectorised Ramer–Douglas–Peucker algorithm
 3) Some lock free technics undehood (write-preferring readers–writer shared lock)
